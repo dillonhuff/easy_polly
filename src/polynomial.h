@@ -105,8 +105,8 @@ namespace easy_polly {
   public:
     static double zero() { return 0.0; }
 
-    static polynomial<double> zero_polynomial() {
-      return polynomial<double>({}, 1);
+    static polynomial<double> zero_polynomial(const int num_vars) {
+      return polynomial<double>({}, num_vars);
     }
   };
 
@@ -129,7 +129,7 @@ namespace easy_polly {
 			    MonomialOrder m) {
     std::vector<polynomial<N> > as;
     for (unsigned i = 0; i < gs.size(); i++) {
-      as.push_back(field_impl<N>::zero_polynomial());
+      as.push_back(field_impl<N>::zero_polynomial(f.num_vars()));
     }
 
     return division_result<N>{as, {{}, 2}};
