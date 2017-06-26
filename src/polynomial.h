@@ -102,6 +102,7 @@ namespace easy_polly {
 
   template<>
   class field_impl<double> {
+  public:
     static double zero() { return 0.0; }
 
     static polynomial<double> zero_polynomial() {
@@ -128,7 +129,7 @@ namespace easy_polly {
 			    MonomialOrder m) {
     std::vector<polynomial<N> > as;
     for (unsigned i = 0; i < gs.size(); i++) {
-      //as.push_back(field_impl<N>::zero());
+      as.push_back(field_impl<N>::zero_polynomial());
     }
 
     return division_result<N>{as, {{}, 2}};
