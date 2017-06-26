@@ -6,11 +6,6 @@
 
 namespace easy_polly {
 
-  // Add within_eps call
-  bool double_eq(const double l, const double r) {
-    return l == r;
-  }
-
   TEST_CASE("Polynomial division") {
     monomial<double> m1{1.0, {2, 1}, 2};
     monomial<double> m2{1.0, {0, 1}, 2};

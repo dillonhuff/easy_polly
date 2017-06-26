@@ -62,17 +62,18 @@ namespace easy_polly {
   class polynomial {
 
     std::vector<monomial<N> > monos;
-    int num_vars;
+    int nvars;
 
   public:
     polynomial(const std::vector<monomial<N> > p_monos,
 	       const int p_num_vars) {
       monos = p_monos;
       std::sort(begin(monos), end(monos), lexicographic_order<N>);
-      num_vars = p_num_vars;
+      nvars = p_num_vars;
     }
 
     int num_monos() const { return monos.size(); }
+    int num_vars() const { return nvars; }
 
     const monomial<N>& monomial(const int i) const { return monos[i]; }
 
@@ -97,6 +98,11 @@ namespace easy_polly {
     polynomial<N> remainder;
   };
 
+  // Add within_eps call
+  bool double_eq(const double l, const double r) {
+    return l == r;
+  }
+
   template<typename N>
   class field_impl {};
 
@@ -108,6 +114,7 @@ namespace easy_polly {
     static polynomial<double> zero_polynomial(const int num_vars) {
       return polynomial<double>({}, num_vars);
     }
+
   };
 
   // template<int>
@@ -130,6 +137,12 @@ namespace easy_polly {
     std::vector<polynomial<N> > as;
     for (unsigned i = 0; i < gs.size(); i++) {
       as.push_back(field_impl<N>::zero_polynomial(f.num_vars()));
+    }
+
+    polynomial<N> zr = field_impl<N>::zero_polynomial(f.num_vars());
+    polynomial<N> p = f;
+    while (!poly_eq(field_impl<N>::equals, zr, p)) {
+      
     }
 
     return division_result<N>{as, {{}, 2}};
