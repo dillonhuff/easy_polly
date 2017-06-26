@@ -97,24 +97,29 @@ namespace easy_polly {
     polynomial<N> remainder;
   };
 
-  template<typename N> N zero();
-
-  template<> double zero<double>() { return 0.0; }
-  
   template<typename N>
-  polynomial<N> zero_polynomial(const int num_vars);
+  class field_impl {};
 
-  template<int>
-  polynomial<double> zero_polynomial<double>(const int num_vars) {
-    std::vector<int> coeffs;
-    for (int i = 0; i < num_vars; i++) {
-      coeffs.push_back(0.0);
+  template<>
+  class field_impl<double> {
+    static double zero() { return 0.0; }
+
+    static polynomial<double> zero_polynomial() {
+      return polynomial<double>({}, 1);
     }
+  };
 
-    monomial<double> zero_monomial{0.0, coeffs, num_vars};
+  // template<int>
+  // polynomial<double> zero_polynomial<double>(const int num_vars) {
+  //   std::vector<int> coeffs;
+  //   for (int i = 0; i < num_vars; i++) {
+  //     coeffs.push_back(0.0);
+  //   }
 
-    return {{zero_monomial}, num_vars};
-  }
+  //   monomial<double> zero_monomial{0.0, coeffs, num_vars};
+
+  //   return {{zero_monomial}, num_vars};
+  // }
   
 
   template<typename N, typename MonomialOrder>
@@ -123,7 +128,7 @@ namespace easy_polly {
 			    MonomialOrder m) {
     std::vector<polynomial<N> > as;
     for (unsigned i = 0; i < gs.size(); i++) {
-      as.push_back(zero<N>());
+      //as.push_back(field_impl<N>::zero());
     }
 
     return division_result<N>{as, {{}, 2}};
